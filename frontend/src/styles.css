@@ -1,0 +1,155 @@
+/* ShopMind v3 — myflow reference system (image-9.png).
+   Design source: the supplied myflow dashboard screenshot.
+   Content source: ShopMind's real UCI Online Retail results — no myflow
+   texting copy is carried over. Blue page surround, white rounded app
+   shell, black icon-rail sidebar, white cards, blue Contacts card,
+   dark Transactions card. Teal #14b8a6 / blue #2563eb accents. */
+*{box-sizing:border-box}
+body{margin:0;height:100vh;overflow:hidden;background:linear-gradient(180deg,#d7e7f6 0%,#b3d0ec 30%,#7aaedc 62%,#3d7ab8 100%);background-attachment:fixed;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111827}
+button,input,select{font:inherit}
+.app{display:flex;height:calc(100vh - 40px);background:#f4f7fb;border:1px solid rgba(255,255,255,.7);border-radius:26px;margin:20px;overflow:hidden;box-shadow:0 24px 70px rgba(10,40,80,.24)}
+/* --- navigation --- */
+.sidebar{width:224px;height:100%;flex-shrink:0;padding:26px 16px 18px;display:flex;flex-direction:column;background:#fff;border-right:1px solid #e8edf5}
+.logo{display:flex;align-items:center;gap:11px;padding:0 12px 28px;color:#0f172a;font-size:19px;font-weight:750;letter-spacing:-.4px}
+.logo svg{width:34px;height:34px;color:#2563eb;flex:none}
+.rail{width:60px;background:#0f172a;border-radius:22px;padding:16px 0 14px;display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.rail .logo{width:34px;height:34px;border-radius:50%;background:#fff;color:#0f172a;display:grid;place-items:center;font-weight:800;font-size:18px;margin-bottom:14px}
+.nav{display:flex;flex-direction:column;gap:6px;align-items:center}
+.nav{align-items:stretch}
+.nav button{width:100%;min-height:46px;padding:0 13px;border:0;border-radius:13px;background:transparent;color:#64748b;cursor:pointer;font-size:14px;font-weight:550;display:flex;align-items:center;gap:13px;text-align:left;transition:background .18s ease,color .18s ease}
+.nav button:hover{background:#f1f5fb;color:#0f172a}
+.nav button.active{background:#eaf1ff;color:#1d4ed8;font-weight:650}
+.nav button .ic{width:21px;flex:none;text-align:center;font-size:18px;line-height:1}
+.nav button .badge{position:absolute;top:2px;right:2px;background:#2563eb;color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:1px 5px;font-style:normal}
+.rail .spacer{flex:1}
+.rail .expand{width:40px;height:40px;border:0;border-radius:12px;background:transparent;color:#94a3b8;cursor:pointer;font-size:16px}
+.rail .expand:hover{color:#fff}
+.profile{display:flex;align-items:center;gap:11px;margin-top:auto;padding:16px 10px 4px;border-top:1px solid #edf1f7}
+.profile .avatar{width:38px;height:38px;flex:none;background:#dbeafe;color:#1d4ed8;font-size:14px}
+.profile-meta{min-width:0;display:flex;flex-direction:column;gap:3px}
+.profile-meta b{font-size:13px;color:#1e293b}
+.profile-meta span{font-size:11px;color:#94a3b8}
+/* --- main + header --- */
+.main{flex:1;height:100%;padding:26px 28px 28px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;min-width:0}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}
+.topbar h1{font-family:Georgia,'Times New Roman',serif;font-size:34px;font-weight:600;margin:0;letter-spacing:-.5px;color:#0f172a}
+.topbar p{color:#64748b;font-size:13px;margin:6px 0 0}
+.topactions{display:flex;align-items:center;gap:10px;padding-top:6px}
+.iconbtn{width:40px;height:40px;border-radius:50%;border:0;background:#fff;cursor:pointer;font-size:16px;color:#334155;box-shadow:0 2px 8px rgba(15,23,42,.08)}
+.syncpill{display:flex;align-items:center;gap:8px;background:#fff;border-radius:999px;padding:8px 14px;font-size:12px;color:#334155;box-shadow:0 2px 8px rgba(15,23,42,.08)}
+.syncpill b{display:block;font-size:12px}.syncpill span{color:#2563eb;font-size:11px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#2563eb;color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px}
+.banner{background:#0f172a;color:#fff;border-radius:16px;padding:12px 16px;font-size:13px;margin-bottom:18px}
+.banner.demo{background:#fff;color:#111827;border:1px solid #e2e8f0}
+.error{background:#fff;border:1px solid #fca5a5;border-radius:16px;padding:14px;margin-bottom:16px;font-size:14px}
+h2{margin:0 0 4px;font-size:20px}
+.sub{color:#64748b;font-size:13px;margin:0 0 18px}
+/* --- myflow dashboard grid --- */
+.flow{display:grid;grid-template-columns:1.15fr 1.15fr .95fr;grid-template-areas:"del camp contacts" "top msg contacts" "month month credits" "month month texts";gap:16px}
+.area-del{grid-area:del}.area-camp{grid-area:camp}.area-contacts{grid-area:contacts}
+.area-top{grid-area:top}.area-msg{grid-area:msg}.area-month{grid-area:month}
+.area-credits{grid-area:credits}.area-texts{grid-area:texts}
+.card{background:#fff;border-radius:20px;padding:20px 22px;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+.card h3{margin:0;font-size:15px;font-weight:600;color:#0f172a}
+.cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.kebab{color:#94a3b8;font-size:18px;letter-spacing:1px;cursor:pointer}
+.bignum{font-size:34px;font-weight:700;letter-spacing:-1px;margin:8px 0 2px;color:#0f172a}
+.bignum small{font-size:16px;font-weight:600;color:#64748b}
+.pill{display:inline-block;background:#dbeafe;color:#1d4ed8;border-radius:999px;padding:3px 9px;font-size:11px;font-weight:600}
+.pill.teal{background:#ccfbf1;color:#0f766e}
+.pill.grey{background:#f1f5f9;color:#475569}
+.rightnote{font-size:12px;color:#64748b}
+.barcode{display:flex;gap:2px;align-items:stretch;height:26px;margin-top:14px}
+.barcode i{flex:1;border-radius:2px}
+/* blue contacts card */
+.bluecard{background:linear-gradient(180deg,#3b82f6 0%,#1d4ed8 55%,#0a2e6b 100%);color:#fff;border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(15,23,42,.15)}
+.bluecard h3{margin:0;font-size:15px;font-weight:600}
+.bluecard .bignum{color:#fff}
+.bluecard .pill{background:rgba(255,255,255,.22);color:#fff}
+.bluecard .rightnote{color:#bfdbfe}
+.bluebars{display:flex;align-items:flex-end;gap:10px;flex:1;min-height:150px;margin-top:18px}
+.bluebars .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bluebars .bar{width:100%;max-width:26px;background:#fff;border-radius:6px 6px 0 0}
+.bluebars .bar.hatched{background:repeating-linear-gradient(45deg,rgba(255,255,255,.9) 0 2px,rgba(255,255,255,.15) 2px 6px)}
+.bluebars span{font-size:11px;color:#bfdbfe}
+/* top customers */
+.toplist{display:flex;gap:16px;margin-top:6px}
+.stackbar{width:52px;flex-shrink:0;display:flex;flex-direction:column;gap:3px;justify-content:flex-end}
+.stackbar i{display:block;border-radius:4px}
+.stackbar i.hatched{background:repeating-linear-gradient(45deg,#cbd5e1 0 2px,#f1f5f9 2px 6px)}
+.contactrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid #f1f5f9}
+.contactrow:first-of-type{border-top:0}
+.contactrow .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.contactrow b{font-size:13px}
+.contactrow .mail{font-size:12px;color:#94a3b8;margin-left:6px}
+.contactrow .pct{margin-left:auto;font-size:12px;color:#64748b}
+.contactrow .val{font-size:13px;font-weight:600;width:64px;text-align:right}
+/* donut legend */
+.donutwrap{display:flex;align-items:center;gap:8px}
+.legendrow{display:flex;align-items:center;gap:8px;padding:9px 0;font-size:13px}
+.legendrow .dot{width:9px;height:9px;border-radius:50%}
+.legendrow .delta{margin-left:auto;font-size:12px;color:#64748b}
+/* credits + dark card */
+.credits{display:flex;align-items:center;gap:10px}
+.credits .bignum{margin:0}
+.plusbtn{margin-left:auto;width:36px;height:36px;border-radius:50%;border:0;background:#0f172a;color:#fff;font-size:18px;cursor:pointer}
+.darkcard{background:#0f172a;color:#fff;border-radius:20px;padding:20px 22px;box-shadow:0 2px 10px rgba(15,23,42,.2)}
+.darkcard h3{margin:0;font-size:15px;font-weight:600}
+.darkcard .bignum{color:#fff}
+.darkcard .pill{background:rgba(255,255,255,.16);color:#fff}
+.darkcard select{background:#1e293b;color:#fff;border:1px solid #334155}
+select{border:1px solid #e2e8f0;border-radius:999px;padding:7px 12px;background:#fff;font-size:12px;color:#334155;outline:none}
+/* month bars (custom, honest: height = monthly revenue) */
+.monthbars{display:flex;align-items:flex-end;gap:10px;height:210px;margin-top:16px;position:relative}
+.monthbars .mcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end;position:relative}
+.monthbars .mbar{width:100%;max-width:34px;background:#bfdbfe;border-radius:6px 6px 0 0;position:relative}
+.monthbars .mbar.peak{background:#2563eb}
+.monthbars .mbar.hatched{border-radius:6px 6px 0 0;background:repeating-linear-gradient(45deg,#bfdbfe 0 3px,#e0efff 3px 7px)}
+.monthbars span{font-size:11px;color:#94a3b8}
+.callout{position:absolute;top:0;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;border-radius:10px;padding:8px 12px;font-size:11px;line-height:1.5;white-space:nowrap;z-index:2;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.callout b{font-size:12px}
+/* generic pages */
+.grid2{display:grid;grid-template-columns:1.7fr 1fr;gap:16px;margin-bottom:16px}
+.legend{display:flex;gap:14px;font-size:12px;color:#64748b}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px}
+.tablewrap{overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{color:#64748b;font-weight:500;text-align:left;padding:10px 12px;font-size:12px}
+td{padding:13px 12px;border-top:1px solid #f1f5f9}
+.rowlink{cursor:pointer}.rowlink:hover{background:#f8fafc}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.controls input,.controls select{border:1px solid #e2e8f0;border-radius:999px;padding:9px 14px;background:#fff;outline:none;font-size:13px}
+.btn{border:0;background:#0f172a;color:#fff;border-radius:999px;padding:10px 18px;cursor:pointer;font-size:14px}
+.btn.light{background:#f1f5f9;color:#0f172a}
+.btn.blue{background:#2563eb}
+.btn:disabled{opacity:.5}
+.seggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.segcard{background:#fff;border-radius:20px;padding:20px;cursor:pointer;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+.segcard b{font-size:16px}.segcard p{color:#475569;font-size:13px;line-height:1.5}
+.segcard .num{font-size:26px;font-weight:800;margin:10px 0 2px}
+.insight{background:#fff;border-radius:20px;padding:20px;margin-bottom:12px;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+.insight b{font-size:15px}.insight p{color:#475569;font-size:13px;line-height:1.5}
+.muted{color:#64748b;font-size:13px}
+label{font-size:13px;color:#475569;display:block;margin:10px 0 4px}
+@media (max-width:1100px){
+  .flow{grid-template-columns:1fr 1fr;grid-template-areas:"del camp" "contacts contacts" "top msg" "month month" "credits texts"}
+  .grid2,.seggrid{grid-template-columns:1fr}
+}
+@media (max-width:700px){
+  .app{height:calc(100vh - 16px);margin:8px;border-radius:20px;flex-direction:column}
+  .sidebar{width:auto;height:auto;flex:none;padding:10px 12px 8px;border-right:0;border-bottom:1px solid #e8edf5}
+  .logo{padding:0 5px 10px}
+  .logo svg{width:29px;height:29px}
+  .nav{flex-direction:row;flex-wrap:wrap;gap:5px;overflow:visible;padding-bottom:2px}
+  .nav button{width:auto;min-width:0;min-height:40px;flex:1 1 calc(33.333% - 5px);padding:0 10px;gap:7px;font-size:12px}
+  .nav button .ic{font-size:15px}
+  .profile{display:none}
+  .main{height:auto;min-height:0;flex:1;padding:18px}
+  .flow{grid-template-columns:1fr;grid-template-areas:"del" "camp" "contacts" "top" "msg" "month" "credits" "texts"}
+  .topbar h1{font-size:26px}
+}
+@media (max-width:420px){
+  .nav button{flex-basis:calc(50% - 5px)}
+  .topbar{flex-direction:column}
+  .topactions{padding-top:0}
+}
