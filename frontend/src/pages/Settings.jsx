@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { getSummary, runAnalysis } from '../api.js'
+import { getSummary, runAnalysis, uploadDataset } from '../api.js'
 export default function Settings() {
   const [s, setS] = useState(null); const [err, setErr] = useState(''); const [busy, setBusy] = useState(false); const [msg, setMsg] = useState('')
   const [params, setParams] = useState({ reference_date: '2011-12-10', k: '', eps: 1.0, min_samples: 10 })
   const load = () => getSummary().then(setS).catch(e=>setErr(e.message))
   useEffect(() => { load() }, [])
-  const upload = async (e) => { const file = e.target.files[0]; if (!file) return; const fd = new FormData(); fd.append('file', file); setBusy(true);
-    try { const res = await fetch('http://localhost:5000/api/data/upload', { method: 'POST', body: fd }); const d = await res.json(); if (!res.ok) throw new Error(d.error); setMsg('Uploaded and processed: ' + JSON.stringify(d.totals)); load() } catch (ex) { setErr(ex.message) } setBusy(false) }
+  const upload = async (e) => { const file = e.target.files[0]; if (!file) return; setBusy(true);
+    try { const d = await uploadDataset(file); setMsg('Uploaded and processed: ' + JSON.stringify(d.totals)); load() } catch (ex) { setErr(ex.message) } setBusy(false) }
   const rerun = async () => { setBusy(true); try { const p = {...params, k: params.k ? Number(params.k) : undefined, eps: Number(params.eps), min_samples: Number(params.min_samples)}; await runAnalysis(p); setMsg('Analysis rerun.'); load() } catch (e) { setErr(e.message) } setBusy(false) }
   if (err) return <p className="error">{err}</p>
   if (!s) return <p className="muted">Loading settings…</p>

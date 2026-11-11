@@ -1,5 +1,6 @@
 """One pipeline entry point shared by every endpoint (no retraining per request)."""
 import json, os
+import tempfile
 import joblib
 from .constants import REFERENCE_DATE
 from .data_loader import load_dataset
@@ -9,7 +10,10 @@ from .clustering import run_all
 from .insights import profile_segments, build_insights
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RESULTS_PATH = os.path.join(BASE, "models", "results.json")
+BUNDLED_RESULTS_PATH = os.path.join(BASE, "models", "results.json")
+RUNTIME_DIR = (os.path.join(tempfile.gettempdir(), "shopmind")
+               if os.environ.get("VERCEL") else os.path.join(BASE, "models"))
+RESULTS_PATH = os.path.join(RUNTIME_DIR, "results.json")
 
 def run_analysis(data_path=None, params=None):
     params = params or {}
@@ -65,10 +69,12 @@ def run_analysis(data_path=None, params=None):
         r["month"] = str(r["month"])[:10]
     os.makedirs(os.path.dirname(RESULTS_PATH), exist_ok=True)
     with open(RESULTS_PATH, "w") as f: json.dump(out, f)
-    joblib.dump({"scaler": scaler}, os.path.join(BASE, "models", "scaler.joblib"))
+    joblib.dump({"scaler": scaler}, os.path.join(RUNTIME_DIR, "scaler.joblib"))
     return out
 
 def load_results():
     if os.path.exists(RESULTS_PATH):
         with open(RESULTS_PATH) as f: return json.load(f)
+    if os.path.exists(BUNDLED_RESULTS_PATH):
+        with open(BUNDLED_RESULTS_PATH) as f: return json.load(f)
     return None

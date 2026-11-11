@@ -36,6 +36,17 @@ npm run dev
 ```
 Tests: `cd backend && python -m pytest tests -q` (3 tests, verified here).
 
+## Vercel deployment
+The root `vercel.json` defines separate Flask (`backend`) and Vite (`frontend`)
+services. `/api/*` routes to Flask; all other paths route to the frontend.
+The frontend uses same-origin API paths, and its Vite dev server proxies `/api`
+to `http://localhost:5000` for local development.
+
+On Vercel, uploaded files and newly generated analysis artifacts are written
+under the function's temporary directory. That storage is not durable or shared
+between function instances; use persistent external storage if uploaded data
+must survive deployments or be available to every instance.
+
 ## Real dataset (UCI Online Retail) — verified run, 2026-11-03
 The uploaded `Online Retail.xlsx` (541,909 rows) was run through the full
 pipeline here, in ~55 seconds:

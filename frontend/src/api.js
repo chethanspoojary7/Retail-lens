@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const BASE = import.meta.env.VITE_API_URL || '';
 export async function api(path, opts = {}) {
   const res = await fetch(BASE + path, opts);
   const data = await res.json().catch(() => ({}));
@@ -12,6 +12,11 @@ export const getModels = () => api('/api/models/compare');
 export const getInsights = () => api('/api/insights');
 export const getAnalytics = () => api('/api/analytics');
 export const getSummary = () => api('/api/data/summary');
+export const uploadDataset = (file) => {
+  const body = new FormData();
+  body.append('file', file);
+  return api('/api/data/upload', { method: 'POST', body });
+};
 export const runModels = (params) => api('/api/models/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) });
 export const runAnalysis = (params) => api('/api/analysis/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) });
 export const exportCsv = (type) => { window.open(BASE + '/api/reports/export?type=' + type, '_blank'); };

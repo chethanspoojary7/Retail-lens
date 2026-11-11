@@ -1,7 +1,9 @@
 import io, os, sys
+import tempfile
 import pandas as pd
 from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
+from werkzeug.utils import secure_filename
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from src.train import run_analysis, load_results
 from src.data_loader import validate_columns
@@ -30,7 +32,12 @@ def upload():
     if "file" not in request.files: return jsonify({"error": "No file part named 'file'."}), 400
     f = request.files["file"]
     if not f.filename: return jsonify({"error": "Empty filename."}), 400
-    path = os.path.join(BASE, "data", f.filename)
+    filename = secure_filename(f.filename)
+    if not filename: return jsonify({"error": "Invalid filename."}), 400
+    upload_dir = (os.path.join(tempfile.gettempdir(), "shopmind", "data")
+                  if os.environ.get("VERCEL") else os.path.join(BASE, "data"))
+    os.makedirs(upload_dir, exist_ok=True)
+    path = os.path.join(upload_dir, filename)
     f.save(path)
     try:
         if path.lower().endswith((".xlsx", ".xls")): df = pd.read_excel(path)
